@@ -36,5 +36,12 @@ Here's an overview of the configuration parameters:
 * "Allow Funding Sources": Check this if you'd like your users to be able to select a funding source other than the default source
 * "Default Funding Source": The default funding source to use; Defaults to 'Balance' for Dwolla Balance
 
+Webhooks
+------------
+
+In order to keep transaction statuses updated, we recommend using Dwolla's Webhooks system. Simply set your Dwolla API application's TransactionStatus webhook to `http://www.YOURSTORE.com/dwolla/webhook/transaction_status`.
+
+If you're running on localhost, you can easily create a tunnel using "ngrok".
+
 
 Copyright (c) 2013 Michael Schonfeld / Dwolla, released under the New BSD License
