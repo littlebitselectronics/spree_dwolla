@@ -1,12 +1,12 @@
 <div class="connect_dwolla">
   <% if not session[:dwolla_oauth_token] %>
-  <p>Click on the button below to connect your Dwolla account.</p>
+  <p><%= Spree.t(:oauth_text, :scope => :dwolla) %></p>
 
   <div class="button_wrapper">
     <%= link_to('Connect with Dwolla', dwolla_auth_url, :id => "dwolla_button") %>
   </div>
   <% else %>
-  <p>Not <%= session[:dwolla_name] %>? <a href="<%= dwolla_logout_url %>">Click here</a> to logout of Dwolla.</p>
+  <p><%= (Spree.t(:oauth_logout, :scope => :dwolla) % [session[:dwolla_name], dwolla_logout_url]).html_safe %></p>
 
   <fieldset class="no-border-bottom">
     <% if session[:dwolla_funding_sources] %>

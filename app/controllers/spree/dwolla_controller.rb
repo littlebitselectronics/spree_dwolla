@@ -63,9 +63,9 @@ module Spree
         session[:dwolla_name] = me['Name'][0..(me['Name'].index(' ')-1)]
         session[:dwolla_id] = me['Id']
 
-        flash[:notice] = Spree.t(:post_login, :scope => :dwolla)
+        flash[:notice] = Spree.t(:oauth_success, :scope => :dwolla)
       rescue ::Dwolla::APIError => exception
-        flash[:notice] = "Something went wrong. Dwolla said: #{exception}."
+        flash[:notice] = Spree.t(:oauth_fail, :scope => :dwolla) % exception
       end
 
       redirect_to checkout_state_path(:payment, :method => 'dwolla')

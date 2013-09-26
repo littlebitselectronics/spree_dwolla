@@ -1,10 +1,15 @@
----
 en:
-  dwolla:
-    transaction: "Transaction Information"
-    oauth_token: "Dwolla OAuth token"
-    transaction_id: "Dwolla Transaction ID"
-    payment_log: "Payment History"
-    dwolla_pin: "Enter your Dwolla 4-digit PIN"
-    post_login: "Great, we have you logged in to Dwolla. Enter your PIN to continue."
-    cancel: "Don't want to use Dwolla? No problems."
+  spree:
+    dwolla:
+      transaction: "Transaction Information"
+      oauth_token: "Dwolla OAuth token"
+      transaction_id: "Dwolla Transaction ID"
+      payment_log: "Payment History"
+      dwolla_pin: "Enter your Dwolla 4-digit PIN"
+      cancel: "Don't want to use Dwolla? No problems."
+      checkout_success: 'Dwolla Checkout: Success'
+      checkout_failure: 'Dwolla Checkout: Failure'
+      oauth_text: 'Click on the button below to connect your Dwolla account.'
+      oauth_logout: 'Not %s? <a href="%s">Click here</a> to logout of Dwolla.'
+      oauth_success: "Great, we have you logged in to Dwolla. Enter your PIN to continue."
+      oauth_fail: 'Something went wrong. Dwolla said: %s'

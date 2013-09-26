@@ -1,7 +1,7 @@
-SpreeDwolla
+Official Dwolla for Spree
 ===========
 
-Introduction goes here.
+This is the official Dwolla OAuth / REST extension for Spree.
 
 Installation
 ------------
@@ -37,4 +37,4 @@ Simply add this require statement to your spec_helper:
 require 'spree_dwolla/factories'
 ```
 
-Copyright (c) 2013 [name of extension creator], released under the New BSD License
+Copyright (c) 2013 Michael Schonfeld / Dwolla, released under the New BSD License
