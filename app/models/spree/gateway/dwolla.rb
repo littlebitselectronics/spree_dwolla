@@ -53,8 +53,6 @@ module Spree
         payment_id = gateway_options[:order_id][(gateway_options[:order_id].index('-')+1)..-1]
         @payment = Spree::Payment.find_by_identifier(payment_id)
         @payment.log_entries.create(:details => "Oops. Something went wrong. Dwolla said: #{exception}")
-        puts "Foobar"
-        puts payment_id
 
         ActiveMerchant::Billing::Response.new(false, Spree.t(:checkout_failure, :scope => :dwolla), { :message => "Dwolla failed: #{exception}" })
       end

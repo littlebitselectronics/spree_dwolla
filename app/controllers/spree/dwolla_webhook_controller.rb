@@ -48,8 +48,6 @@ module Spree
             @payment.failure!
           end
         end
-      else
-        puts "Can't find order for number: #{dwolla_transaction_id}"
       end
 
       render :nothing => true

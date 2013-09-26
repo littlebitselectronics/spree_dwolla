@@ -1,10 +1,12 @@
-Official Dwolla for Spree
-===========
+# Official Dwolla for Spree
+=================================================================================
 
 This is the official Dwolla OAuth / REST extension for Spree.
 
-Installation
-------------
+## Version
+1.0.1
+
+## Installation
 
 Add spree_dwolla to your Gemfile:
 
@@ -19,8 +21,7 @@ bundle
 bundle exec rails g spree_dwolla:install
 ```
 
-Configuration
-------------
+## Configuration
 
 To use this extension, you'll need a Dwolla API application.
 
@@ -36,12 +37,26 @@ Here's an overview of the configuration parameters:
 * "Allow Funding Sources": Check this if you'd like your users to be able to select a funding source other than the default source
 * "Default Funding Source": The default funding source to use; Defaults to 'Balance' for Dwolla Balance
 
-Webhooks
-------------
+## Webhooks
 
 In order to keep transaction statuses updated, we recommend using Dwolla's Webhooks system. Simply set your Dwolla API application's TransactionStatus webhook to `http://www.YOURSTORE.com/dwolla/webhook/transaction_status`.
 
 If you're running on localhost, you can easily create a tunnel using "ngrok".
 
+
+## Changelog
+
+1.0.1
+
+* Clean up some debug puts
+
+1.0.0
+
+* Initial release
+
+## Support
+
+- Dwolla Dev Support &lt;devsupport@dwolla.com&gt;
+- Michael Schonfeld &lt;michael@dwolla.com&gt;
 
 Copyright (c) 2013 Michael Schonfeld / Dwolla, released under the New BSD License
