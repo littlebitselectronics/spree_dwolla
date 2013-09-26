@@ -19,22 +19,22 @@ bundle
 bundle exec rails g spree_dwolla:install
 ```
 
-Testing
--------
+Configuration
+------------
 
-Be sure to bundle your dependencies and then create a dummy test app for the specs to run against.
+To use this extension, you'll need a Dwolla API application.
 
-```shell
-bundle
-bundle exec rake test_app
-bundle exec rspec spec
-```
+In order to run the extension on test mode, you'll need a Dwolla UAT account. Contact Dwolla's (dev support)[mailto:devsupport@dwolla.com] to obtain access to that environment.
 
-When testing your applications integration with this extension you may use it's factories.
-Simply add this require statement to your spec_helper:
+Here's an overview of the configuration parameters:
 
-```ruby
-require 'spree_dwolla/factories'
-```
+* "Dwolla ID": Where you want the money to go to
+* "Key": Your Dwolla API application key
+* "Secret": Your Dwolla API application secret
+* "OAuth Scope": The OAuth permissions you'd like to ask your users for; Defaults to 'Send|Funding|AccountInfoFull'; (See further documentation here)[https://developers.dwolla.com/dev/pages/auth#scopes]
+* "Sandbox": Check this if you were granted access to Dwolla's UAT/Sandbox env
+* "Allow Funding Sources": Check this if you'd like your users to be able to select a funding source other than the default source
+* "Default Funding Source": The default funding source to use; Defaults to 'Balance' for Dwolla Balance
+
 
 Copyright (c) 2013 Michael Schonfeld / Dwolla, released under the New BSD License
