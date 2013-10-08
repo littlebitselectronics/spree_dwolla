@@ -9,12 +9,9 @@ SpreeDwolla = {
 
   hidePaymentSaveAndContinueButton: function(paymentMethod, preauth) {
     if (SpreeDwolla.paymentMethodID && paymentMethod.val() == SpreeDwolla.paymentMethodID) {
-      SpreeDwolla.oldUrl = $('#checkout_form_payment').attr('action');
       if(preauth) { $('.continue').hide(); }
-      $('#checkout_form_payment').attr('action', SpreeDwolla.payUrl)
     } else {
       if(preauth) { $('.continue').show(); }
-      $('#checkout_form_payment').attr('action', SpreeDwolla.oldUrl)
     }
   }
 }
