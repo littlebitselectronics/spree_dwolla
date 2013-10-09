@@ -1,6 +1,6 @@
 module Spree
   CheckoutController.class_eval do
-    before_filter :create_dwolla_payment, :only => [:update]
+    after_filter :create_dwolla_payment, :only => [:update]
 
     def payment_method
       Spree::PaymentMethod.find(:first, :conditions => [ "lower(name) = ?", 'dwolla' ]) || raise(ActiveRecord::RecordNotFound)
@@ -12,7 +12,7 @@ module Spree
 
       return unless Spree::PaymentMethod.find(params[:order][:payments_attributes].first[:payment_method_id]).kind_of?(Spree::Gateway::Dwolla)
 
-      @order.payments.create!({
+      payment = @order.payments.create!({
         :source => Spree::DwollaCheckout.create({
           :oauth_token => session[:dwolla_oauth_token],
           :pin => params[:dwolla_pin],

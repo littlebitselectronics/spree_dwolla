@@ -9,7 +9,11 @@ module Spree
     preference :allow_funding_sources, :boolean, :default => false
     preference :default_funding_source, :string, default: 'Balance'
 
-    def payment_profiles_supported?
+    def supports?(source)
+      true
+    end
+    
+	def payment_profiles_supported?
       true
     end
 
