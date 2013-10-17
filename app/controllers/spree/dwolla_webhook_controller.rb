@@ -14,6 +14,11 @@ module Spree
     end
 
     def transaction_status
+      # Wait 5 seconds for any previous action
+      # to finish, before processing the
+      # webhook message
+      sleep 5
+
       dwolla_transaction_id = params["Transaction"]["Notes"]
       dwolla_transaction_id = dwolla_transaction_id[0..(dwolla_transaction_id.index('-')-1)]
       signature = request.headers["X-Dwolla-Signature"]
