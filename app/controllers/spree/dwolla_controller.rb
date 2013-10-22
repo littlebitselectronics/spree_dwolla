@@ -52,5 +52,73 @@ module Spree
 
       redirect_to checkout_state_path(:payment, :method => 'dwolla')
     end
+
+    def update
+      number = params["number"]
+
+      order = Spree::Order.find_by_number(number)
+      if(order)
+        order.payments.where(:source_type => Spree::DwollaCheckout).each { |payment|
+
+          begin
+            tx = provider::Transactions.get(payment.source.transaction_id, {}, false)
+            payment_status = tx["Status"]
+
+            payment.log_entries.create(:details => "Manually polling transaction status from Dwolla... Current status on the Dwolla server: #{payment_status}")
+            case payment_status
+              when "failed"
+              when "cancelled"
+              when "reclaimed"
+                payment.failure!
+                new_status = 'Failure'
+
+              when "pending"
+              when "completed"
+                payment.pend!
+                new_status = 'Pending'
+
+              when "processed"
+                payment.complete!
+                new_status = 'Complete'
+            end
+
+            payment.log_entries.create(:details => "Changing payment status to: #{new_status}")
+          rescue ::Dwolla::APIError => exception
+            payment.log_entries.create(:details => "Problem polling this transaction from Dwolla. Dwolla said: #{exception}")
+          rescue => exception
+            payment.log_entries.create(:details => "Problem updating this transaction. Spree said: #{exception}")
+          end
+        }
+      end
+
+      redirect_to :back
+    end
+
+    # def refund
+    #   number = params["number"]
+
+    #   order = Spree::Order.find_by_number(number)
+    #   if(order)
+    #     order.payments.where(:source_type => Spree::DwollaCheckout).each { |payment|
+    #       begin
+    #         tx = provider::Transactions.get(payment.source.transaction_id)
+    #         senders_transaction_id = tx["Id"]
+
+    #         refund_tx = provider::Transactions.refund({
+    #           :transactionId => senders_transaction_id,
+    #           :amount => '0.01',
+    #           :pin => payment_method.preferred_your_pin,
+    #           :fundsSource => 'Balance'
+    #         })
+
+    #         payment.log_entries.create(:details => "Refunding transaction on Dwolla... Refund ID: #{refund_tx}")
+    #       rescue ::Dwolla::APIError => exception
+    #         payment.log_entries.create(:details => "Problem refunding this transaction. Dwolla said: #{exception}")
+    #       end
+    #     }
+    #   end
+
+    #   redirect_to :back
+    # end
   end
 end

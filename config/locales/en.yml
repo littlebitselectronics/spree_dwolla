@@ -13,3 +13,5 @@ en:
       oauth_logout: 'Not %s? <a href="%s">Click here</a> to logout of Dwolla.'
       oauth_success: "Great, we have you logged in to Dwolla. Enter your PIN to continue."
       oauth_fail: 'Something went wrong. Dwolla said: %s'
+      update: 'Update transaction status via Dwolla'
+      refund: 'Refund transaction via Dwolla'

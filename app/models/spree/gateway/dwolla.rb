@@ -8,12 +8,14 @@ module Spree
     preference :sandbox, :boolean, :default => true
     preference :allow_funding_sources, :boolean, :default => false
     preference :default_funding_source, :string, default: 'Balance'
+    preference :your_oauth_token, :string
+    preference :your_pin, :string
 
     def supports?(source)
       true
     end
-    
-	def payment_profiles_supported?
+
+    def payment_profiles_supported?
       true
     end
 
@@ -32,6 +34,7 @@ module Spree
     def provider
       ::Dwolla::api_key = preferred_key
       ::Dwolla::api_secret = preferred_secret
+      ::Dwolla::token = preferred_your_oauth_token
       ::Dwolla::scope = preferred_oauth_scope
       ::Dwolla::sandbox = preferred_sandbox
       ::Dwolla::debug = preferred_sandbox

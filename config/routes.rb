@@ -6,4 +6,6 @@ Spree::Core::Engine.routes.draw do
   get '/dwolla/return', :to => "dwolla#return", :as => :dwolla_return
   post '/dwolla/webhook/transaction_status', :to => "dwolla_webhook#transaction_status", :as => :dwolla_webhook
 
+  post '/dwolla/update', :to => "dwolla#update", :as => :dwolla_update
+  post '/dwolla/refund', :to => "dwolla#refund", :as => :dwolla_refund
 end

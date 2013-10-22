@@ -12,6 +12,14 @@
       </dl>
     </div>
   </div>
+
+  <div class="row">
+    <div class="alpha six columns">
+      <p>Dwolla Actions:</p>
+
+      <p>&bull; <%= link_to(Spree.t(:update, :scope => :dwolla), dwolla_update_url(:number => payment.order.number), :method => :post) %></p>
+    </div>
+  </div>
 </fieldset>
 
 <% if payment.log_entries %>
