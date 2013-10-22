@@ -5,12 +5,12 @@ module Spree
     preference :key, :string
     preference :secret, :string
     preference :oauth_scope, :string, default: 'Send|Funding|AccountInfoFull'
-    preference :sandbox, :boolean, :default => true
-    preference :allow_funding_sources, :boolean, :default => false
     preference :default_funding_source, :string, default: 'Balance'
+    preference :allow_funding_sources, :boolean, :default => false
     preference :allow_ach, :boolean, :default => false
     preference :your_oauth_token, :string
     preference :your_pin, :string
+    preference :sandbox, :boolean, :default => false
     preference :enable_debug, :boolean, :default => false
 
     def supports?(source)

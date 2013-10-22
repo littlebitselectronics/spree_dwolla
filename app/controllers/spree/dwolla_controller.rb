@@ -22,6 +22,8 @@ module Spree
     def return
       begin
         code = params['code']
+        return render 'spree/checkout/payment/dwolla_cancel', :layout => false if code.nil?
+
         token = provider::OAuth.get_token(code, dwolla_return_url)
         me = Dwolla::Users.me(token)
 
@@ -45,7 +47,8 @@ module Spree
         flash[:notice] = Spree.t(:oauth_fail, :scope => :dwolla) % exception
       end
 
-      redirect_to checkout_state_path(:payment, :method => 'dwolla')
+      url = checkout_state_path(:payment, :method => 'dwolla')
+      render 'spree/checkout/payment/dwolla_return', :locals => { :url => url }, :layout => false
     end
 
     def update

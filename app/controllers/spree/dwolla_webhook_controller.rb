@@ -1,17 +1,8 @@
 module Spree
   class DwollaWebhookController < StoreController
-    #include ActiveMerchant::Billing::Integrations
     skip_before_filter :verify_authenticity_token
 
     ssl_required
-
-    def provider
-      payment_method.provider
-    end
-
-    def payment_method
-      Spree::PaymentMethod.find(:first, :conditions => [ "lower(name) = ?", 'dwolla' ]) || raise(ActiveRecord::RecordNotFound)
-    end
 
     def transaction_status
       # Wait 5 seconds for any previous action
@@ -19,14 +10,14 @@ module Spree
       # webhook message
       sleep 5
 
-      dwolla_transaction_id = params["Transaction"]["Notes"]
-      dwolla_transaction_id = dwolla_transaction_id[0..(dwolla_transaction_id.index('-')-1)]
+      notes = params["Transaction"]["Notes"]
+      order_number = notes.split('-')[0]
       signature = request.headers["X-Dwolla-Signature"]
       payment_status = params["Transaction"]["Status"].downcase unless params["Transaction"]["Status"].nil?
 
-      @order = Spree::Order.find_by_number(dwolla_transaction_id)
-      if(@order)
-        @payment = @order.payments.where(:state => "pending", :source_type => 'Spree::DwollaCheckout').first
+      order = Spree::Order.find_by_number(order_number)
+      if(order)
+        @payment = order.payments.where(:state => "pending", :source_type => 'Spree::DwollaCheckout').first
         if @payment
           @payment.log_entries.create(:details => request.raw_post + " (Signature: #{signature})")
 
@@ -57,5 +48,24 @@ module Spree
 
       render :nothing => true
     end
+
+    private
+
+      def enable_debug
+        payment_method.preferred_enable_debug
+      end
+
+      def log(string)
+        logger.info string if @enable_debug
+      end
+
+      def provider
+        payment_method.provider
+      end
+
+      def payment_method
+        Spree::PaymentMethod.find(:first, :conditions => [ "lower(name) = ?", 'dwolla' ]) || raise(ActiveRecord::RecordNotFound)
+      end
+
   end
 end
