@@ -3,7 +3,7 @@
 This is the official Dwolla OAuth / REST extension for Spree.
 
 ## Version
-1.1.0
+1.2.0
 
 ## Installation
 
@@ -44,6 +44,13 @@ If you're running on localhost, you can easily create a tunnel using "ngrok".
 
 
 ## Changelog
+
+1.2.0
+
+* Fix translation file missing label ("dwolla_funding_source")
+* Auto approve instant-type transactions (Credit and Balance)
+* Only pass the "R" order ID to the Dwolla notes field (as opposed to having the payment ID as well)
+* Change payment provider to auto capture
 
 1.1.0
 
