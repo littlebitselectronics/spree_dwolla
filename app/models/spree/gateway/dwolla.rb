@@ -11,6 +11,7 @@ module Spree
     preference :allow_ach, :boolean, :default => false
     preference :your_oauth_token, :string
     preference :your_pin, :string
+    preference :enable_debug, :boolean, :default => false
 
     def supports?(source)
       true

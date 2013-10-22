@@ -56,17 +56,27 @@ module Spree
     end
 
     def update
+      debug = payment_method.preferred_enable_debug
       number = params["number"]
+      payment_id = params["payment_id"]
+
+      logger.info "Updating order with number: #{number} and payment ID: #{payment_id}" if debug
 
       order = Spree::Order.find_by_number(number)
       if(order)
-        order.payments.where(:source_type => Spree::DwollaCheckout).each { |payment|
+        logger.info "Found order! Looking for DwollaCheckout source payment" if debug
+
+        order.payments.where(:id => payment_id, :source_type => Spree::DwollaCheckout).each { |payment|
+          logger.info "Found a DwollaCheckout type payment with ID #{payment.id}! Updating..." if debug
 
           begin
             tx = provider::Transactions.get(payment.source.transaction_id, {}, false)
             payment_status = tx["Status"]
 
+            logger.info "#{payment.id} has Dwolla status: #{payment_status}" if debug
+
             payment.log_entries.create(:details => "Manually polling transaction status from Dwolla... Current status on the Dwolla server: #{payment_status}")
+
             case payment_status
               when "failed"
               when "cancelled"
@@ -84,13 +94,21 @@ module Spree
                 new_status = 'Complete'
             end
 
+            logger.info "Setting #{payment.id} to status: #{new_status}" if debug
+
             payment.log_entries.create(:details => "Changing payment status to: #{new_status}")
           rescue ::Dwolla::APIError => exception
+            logger.info "Problem polling this transaction from Dwolla. Dwolla said: #{exception}" if debug
+
             payment.log_entries.create(:details => "Problem polling this transaction from Dwolla. Dwolla said: #{exception}")
           rescue => exception
+            logger.info "Problem updating this transaction. Spree said: #{exception}" if debug
+
             payment.log_entries.create(:details => "Problem updating this transaction. Spree said: #{exception}")
           end
         }
+      else
+        logger.info "Couldn't find any orders matching that number" if debug
       end
 
       redirect_to :back

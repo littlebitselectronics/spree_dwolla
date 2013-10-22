@@ -17,7 +17,7 @@
     <div class="alpha six columns">
       <p>Dwolla Actions:</p>
 
-      <p>&bull; <%= link_to(Spree.t(:update, :scope => :dwolla), dwolla_update_url(:number => payment.order.number), :method => :post) %></p>
+      <p>&bull; <%= link_to(Spree.t(:update, :scope => :dwolla), dwolla_update_url(:number => payment.order.number, :payment_id => payment.id), :method => :post) %></p>
     </div>
   </div>
 </fieldset>
