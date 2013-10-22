@@ -5,6 +5,7 @@ en:
       oauth_token: "Dwolla OAuth token"
       transaction_id: "Dwolla Transaction ID"
       payment_log: "Payment History"
+      dwolla_funding_source: "Choose a Dwolla Funding Source"
       dwolla_pin: "Enter your Dwolla 4-digit PIN"
       cancel: "Don't want to use Dwolla? No problems."
       checkout_success: 'Dwolla Checkout: Success'

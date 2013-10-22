@@ -37,7 +37,9 @@ module Spree
 
           funding_sources = Dwolla::FundingSources.get(nil, token)
           funding_sources.each do |source|
-            session[:dwolla_funding_sources][source['Name']] = source['Id']
+            if source['Id'] == 'Credit' or source['Id'] == 'Balance' or payment_method.preferred_allow_ach
+              session[:dwolla_funding_sources][source['Name']] = source['Id']
+            end
           end
         end
 
