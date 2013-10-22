@@ -26,7 +26,7 @@ module Spree
 
       @order = Spree::Order.find_by_number(dwolla_transaction_id)
       if(@order)
-        @payment = @order.payments.where(:state => "pending", :source_type => Spree::DwollaCheckout).first
+        @payment = @order.payments.where(:state => "pending", :source_type => 'Spree::DwollaCheckout').first
         if @payment
           @payment.log_entries.create(:details => request.raw_post + " (Signature: #{signature})")
 
