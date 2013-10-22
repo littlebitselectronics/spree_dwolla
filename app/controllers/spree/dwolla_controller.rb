@@ -57,8 +57,8 @@ module Spree
       if(order)
         log "Found order! Looking for DwollaCheckout source payment"
 
-        order.payments.where(:id => payment_id, :source_type => Spree::DwollaCheckout).each { |payment|
-          logger.info "Found a DwollaCheckout type payment with ID #{payment.id}! Updating..." if debug
+        order.payments.where(:id => payment_id, :source_type => 'Spree::DwollaCheckout').each { |payment|
+          log "Found a DwollaCheckout type payment with ID #{payment.id}! Updating..."
 
           begin
             tx = provider::Transactions.get(payment.source.transaction_id, {}, false)
