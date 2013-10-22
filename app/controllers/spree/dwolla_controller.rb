@@ -1,12 +1,5 @@
 module Spree
   class DwollaController < StoreController
-    def provider
-      payment_method.provider
-    end
-
-    def payment_method
-      Spree::PaymentMethod.find(:first, :conditions => [ "lower(name) = ?", 'dwolla' ]) || raise(ActiveRecord::RecordNotFound)
-    end
 
     def cancel
       flash[:notice] = Spree.t(:cancel, :scope => :dwolla)
@@ -113,6 +106,24 @@ module Spree
 
       redirect_to :back
     end
+
+    private
+
+      def enable_debug
+        payment_method.preferred_enable_debug
+      end
+
+      def log(string)
+        logger.info string if @enable_debug
+      end
+
+      def payment_method
+        @payment_method ||= Spree::PaymentMethod.find(:first, :conditions => [ "lower(name) = ?", 'dwolla' ]) || raise(ActiveRecord::RecordNotFound)
+      end
+
+      def provider
+        payment_method.provider
+      end
 
     # def refund
     #   number = params["number"]
