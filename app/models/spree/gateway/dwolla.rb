@@ -9,8 +9,6 @@ module Spree
     preference :allow_funding_sources, :boolean, :default => false
     preference :default_funding_source, :string, default: 'Balance'
 
-    attr_accessible :preferred_dwolla_id, :preferred_key, :preferred_secret, :preferred_oauth_scope, :preferred_sandbox, :preferred_allow_funding_sources, :preferred_default_funding_source
-
     def payment_profiles_supported?
       true
     end
